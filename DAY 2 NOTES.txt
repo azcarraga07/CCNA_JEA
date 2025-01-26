@@ -1,0 +1,390 @@
+Private IP-
+ex. of Private IP
+	Class A - 10.0.0.0 /8
+	Class B - 172.16.0.0 /16
+	Class C - 192.168.0.0 /24
+
+Public IP - Assign by ISP
+	  - Mostly Paid
+ex. of Public IP
+	- 136.158.56.105 - Converge ISP
+
+IP Address has over 4 Billion
+
+4 State of DHCP (IN ORDER)
+*DORA
+- Discover
+- Offer
+- Request
+- Acknowledge
+
+Philippine IP Address Block
+- is it unique IP for  phillipines only
+- routed ip block to other countires
+
+IP Address has 4 Octates, and it has 32 bits
+
+195 = 8 bits
+13 = 4 bits
+1750 = 11 bits
+1855 = 11 bits
+2,700 = 12 bits
+2 = 2 bits
+376 = 9 bits
+888 = 10 bits
+8 = 4 bits
+212 = 8 bits 
+4,500 = 13 bits 
+81 = 7 bits
+20,000 = 15 bits
+55 = 6 bits
+
+25 = 5 bits
+172 = 8 bits
+
+SUBNETTING EXAM QUESTION
+
+ACCENTURE is one of the largest BPO companies.... they invested xxx million dollars for 100 coew switches, 88 routers, 64 leased line.... as a network enginees, design and configure the domain accenture.com call center with 1500 personnel.
+Which of the following Network/CIDR is preferable to implement?
+a. 10.0.0.0/21
+b. 10.0.8.0/21 (Answer)
+c. 10.0.10.0/18
+d. 10.100.10.0/10
+
+ANSWER
+- CSI 
+ Convert It 
+=1500 = 11 bits
+
+ Subtract  It
+/32 - /11 - /21 (3rd,8i) (Answer)
+
+ Ipasok si 8i sa 3rd Octet
+Accenture.com
+Network IP: 10.0.8.0
+First Usable: 10.0.8.1
+Last Usable: 10.0.15.254
+Broadcast: 10.0.15.255
+not Accenture.com: 10.0.16.0
+
+TemPlate_CoreSW:
+config t
+vlan 25
+ name concentrix.com
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.16.1 255.255.240.0
+ip dhcp excluded-add 10.0.16.1 10.0.16.100
+ip dhcp pool concentrix.com
+ network 10.0.16.0 255.255.240.0
+ default-router 10.0.16.1
+ domain-name concentrix.com
+ dns-server 10.21.1.10
+ option 150 ip 10.21.100.8
+ Int Fa 0/7
+  swi Voice vlan 25
+  do sh ip dhcp binding
+
+Example 2:
+	Design a network for concentrix.com with 3500 users using 10.0.0.0/1 network.
+
+CSI
+- C: 3500 - 12bits
+- S: /32 - /12 = /20 (3rd, 16i)
+- I: Ipasok 16i sa 3rd Octet
+
+Concentric.com
+Net: 10.0.16.0
+F: 10.0.16.1
+L: 10.0.31.254
+B: 10.0.31.255
+notConcentrix: 10.0.32.0
+
+
+Example 3:
+	Design a network for smart.com.ph with 35,000 users using 10.0.0.0/10 network.
+C: 35,000 - 16bits
+S: /32 - /16 = /16 (2nd,1i)
+I: Ipasok 1i sa 2nd Octet
+
+smart.com.ph
+Net: 10.1.0.0 255.255.0.0
+F: 10.1.0.1
+L: 10.1.255.254
+B: 10.1.255.255
+notsSmart.com.ph: 10.2.0.0
+
+TemPlate_CoreSW:
+config t
+vlan 25
+ name smart.com.ph
+ exit
+Int vlan 25
+ no shut
+ ip add 10.1.0.1 255.255.0.0
+ip dhcp excluded-add 10.1.0.1 10.1.0.100
+ip dhcp pool smart.com.ph
+ network 10.1.0.0 255.255.0.0
+ default-router 10.1.0.1
+ domain-name smart.com.ph
+ dns-server 10.21.1.10
+ option 150 ip 10.21.100.8
+ Int Fa 0/7
+  swi Voice vlan 25
+  do sh ip dhcp binding
+
+Example 4:
+	Design a network for pnp.gov.ph with 200 call center personnel using 10.0.0.0/4 network.
+
+C: 200 - 8bits
+S: /32 - /8 = /24 (3rd,1i)
+I: Ipasok 1i sa 3rd Octet
+
+pnp.gov.ph
+Net: 10.0.1.0 255.255.255.0
+F: 10.0.1.1
+L: 10.0.1.254
+B: 10.0.1.255
+notPnp.gov.ph: 10.0.2.0
+
+TemPlate_CoreSW:
+config t
+vlan 25
+ name Pnp.gov.ph
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.1.1 255.255.255.0
+ip dhcp excluded-add 10.0.1.1 10.0.1.20
+ip dhcp pool Pnp.gov.ph
+ network 10.0.1.0 255.255.255.0
+ default-router 10.0.1.1
+ domain-name Pnp.gov.ph
+ dns-server 10.21.1.10
+ option 150 ip 10.21.100.8
+ Int Fa 0/7
+  swi Voice vlan 25
+  do sh ip dhcp binding
+
+
+Example 5:
+	Desing a network that is exclusively only for 15 PC in each Department of bdo.com Bank
+
+C: 15 - 4bits
+S: /32 - /4 = /28 (4th,16i)
+I: Ipasok 16i sa 4th Octet
+
+bdo.com.ph
+1st Net: 10.0.0.16 255.255.255.240
+F: 10.0.0.17
+L: 10.0.0.30
+B: 10.0.0.31
+
+2nd Net: 10.0.0.32
+F: 10.0.0.33
+L: 10.0.0.46
+B: 10.0.0.47
+
+3rd Net: 10.0.0.48
+F: 10.0.0.49
+L: 10.0.0.62
+B: 10.0.0.63
+
+notbdo.com.ph: 10.0.0.64
+
+TemPlate_CoreSW:
+config t
+vlan 25
+ name bdo.com.ph
+ exit
+Int vlan 25
+ no shut
+ ip add 10.0.0.49 255.255.255.240
+ip dhcp excluded-add 10.0.0.49 10.0.0.50
+ip dhcp pool bdo.com.ph
+ network 10.0.0.48 255.255.255.240
+ default-router 10.0.0.49
+ domain-name bdo.com.ph
+ dns-server 10.21.1.10
+ option 150 ip 10.21.100.8
+ Int Fa 0/7
+  swi Voice vlan 25
+  do sh ip dhcp binding
+
+
+
+
+
+VLSM - Variable Length Subnet Mask
+	Design a network for sykes.com where there are 300 agents, 30 for Management Dept., and 20 for HR Dept.
+
+CSI - Agents
+C: 300 - 9bits
+S: /32 - /9 = /23 (3rd, 2i)
+I: Ipasok 2i sa 3rd Octet
+
+Agents
+Net: 192.168.2.0
+F: 192.168.2.1
+L: 192.168.3.254
+B: 92.168.3.255
+
+CSI - Management
+C: 30 - 5bits
+S: /32 - /5 = /27 (4th,32i)
+I: Ipasok 32i sa 4th Octet
+
+Management:
+Net: 192.168.4.32
+F: 192.168.4.33
+L: 192.168.4.62
+B: 192.168.4.63
+
+CSI - HR
+C: 20 - 5bits
+S: /32 - /5 = /27 (4th,32i)
+I: Ipasok 32i sa 4th Octet
+
+HR
+Net: 192.168.4.64
+F: 192.168.4.65
+L: 192.168.4.94 
+B: 192.168.4.95
+
+notSykes: 192.168.4.96
+
+
+
+
+The 5 HIT combo in IP Addressing Subnets:
+Design 192.168.100.0 subnet to 5 office/Deptarment/Section
+
+(Combo 1-3)
+- C: Convert: 5 Offices to bits = 3 bits
+- A: Add: /24 + /3 = /27 (4th, 32i)
+- I: Ipasok si 32i sa 4th Octet
+
+Subnet zero = 192.168.100.0
+1st Office: 192.168.100.32
+2nd Office: 192.168.100.64
+3rd Office: 192.168.100.96
+4th Office: 192.168.100.128
+5th Office: 192.168.100.160
+
+If itotodo si /27 
+(Extra combo 4-5)
+- Find the total hosts: /32 -  = /27 = 2^5 = 32-2 (broadcast and network) = 30 hosts per subnet
+- Find all the subnets: /24 +  = /27 = 2^3 = 8 subnets
+
+6th Office: 192.168.100.192
+7th Office: 192.168.100.224
+
+where's the Zero = IP Subnet Zero
+
+
+
+Network IP Aggregation / Summarization
+
+Example 1:
+9.0.0.0/8
+10.0.0.0/8
+11.0.0.0/8
+		
+Summarized:
+0i	4i	8i (9,10,11)	12i
+Network 8.0.0.0/5 248.0.0.0
+Network 12.0.0.0/5 248.0.0.0
+
+Example 2:
+172.104.0.0/16
+172.105.0.0/16
+:
+:
+172.113.0.0/16
+
+Summarized: 172.96.0.0/11
+
+Example 3:
+192.168.210.0/24
+192.168.211.0/24
+:
+:
+192.168.220.0/24
+
+Summarized: 192.168.208.0/20 (3rd, 16i)
+
+
+
+Normal		IPv4		IPv6 (0-9,a-f)
+
+7999		7.255.255.255		::7fff
+8000		8.0.0.0			::8000
+8001		8.0.0.1			::8001
+
+1899		1.8.255.255		::18ff
+1900		1.9.0.0			::1900
+1901		1.9.0.1			::1901
+
+
+IPv6 Addressing:
+
+- 128 bits vs IPv4 32 bits
+- 7 hiwa using (:) vs IPv4 na 3 hiwa (Octates)
+- Valid values (0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f)
+	ex.: fe80:1234:5678:90aa:bbbb:cccc:dddd:eeff
+
+- It allows zero omission to make it short
+- Continues zeroes can be elimintaed, in the place of those zeores ekiminated, simply use a double-colon (::)
+
+Zero Ommission Ruling:
+Rule 1 : (Leading Zero Ommission)
+Before: 1111 : 0123 : 0012 : 0001 : abcd : 0abc : 9891 : abcd
+
+After:  1111 :  123 :   12 :    1 : abcd :  abc : 9891 : abcd
+1111:123:12:1:abcd:abc:9891:abcd
+
+Rule 2: Continous Zero Ommission
+Before: 1111 : 0000 : 0000 : 0000 : abcd : 0abc : 9891 : abcd
+After:  1111 :      :      :      : abcd :  abc : 9891 : abcd
+1111::abcd:abc:9891:abcd
+
+Before: 1111 : 0000 : 0000 : 0000 : 1234 : 0000 : 0000 : f00d
+After:  1111 :      :      :      : 1234 : 0    : 0    : f00d
+1111::1234:0:0:f00d
+
+Rule 3: Discontinous Zero Ommission
+Before: 1111 : 0000 : 0000 : abcd : 0101 : 0000 : 1230 : f00d
+After:  1111 :      :      : abcd :  101 :    0 : 1230 : f00d
+1111::abcd:101:0:1230:f00d
+
+IPv4 : 192.168.1.10/24
+IPv6 : 192:168:1::10/64 (0192:0168:0001:0000:0000:0000:0000:0010)
+
+
+Try to Make it Short:
+
+1. 000a:000c:0000:0000:0000:0000:0000:0000/64 = a:c::::::/64
+2. = 0:::::::/0
+3. = fe80:::0a:0:0:f/64
+4. = 2002:6500::3000:0:0:0:0/64
+5. = 0:::::::01/64
+6. ff00::beef:a00a:aa0:0:0/8
+7. = 2001:db8:1::ab9:C0A8
+8. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
