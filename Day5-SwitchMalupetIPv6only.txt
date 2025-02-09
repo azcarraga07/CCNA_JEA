@@ -331,6 +331,7 @@ BackupPort = yuck yuck, suck urself. enter urself, self-service
 
 how becomes RootPort = kanangKamay
 Cost >> Priority >> Number
+19 	128	    10
 
 who is darna: 802.1d
 kabit PC = 30s
@@ -490,10 +491,11 @@ config t
 hostname PLDT-ITO
 Track 1 Int gi 0/1 line-protocol
 Int vlan 1
-standby 1 ip 10.__.1.6
+standby 1 ip 10.21.1.6
 standby 1 preempt
 standby 1 Priority 150
 standby 1 Track 1 decrement 60
+end
 
 @D1 para realworld:
 config t
@@ -508,7 +510,7 @@ COREBABA/GLOBE:
 config t
 hostname GLOBE-ITO
 Int vlan 1
-standby 1 ip 10.__.1.6
+standby 1 ip 10.21.1.6
 standby 1 preempt
 standby 1 Priority 100
 end
